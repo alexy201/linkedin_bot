@@ -25,15 +25,24 @@ def login_to_linkedin(driver):
     driver.find_element(By.CLASS_NAME,"sign-in-form__submit-button").click()
 
 def send_requests_to_users(driver):
-    WebDriverWait(driver, 7).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "discover-cohort-view__heading"))
-    )
-    javaScript =  "window.scrollBy(0,13960);" #change based on window
+    path = "//h2[contains(., '%s')]" % sensative.SEARCH
+    print(path)
+    while True:
+        try:
+            WebDriverWait(driver, 7).until(
+                EC.visibility_of_element_located((By.XPATH, path))
+            )
+        except:
+            driver.refresh()
+        else:
+            break
+    ele = driver.find_element(By.XPATH, path)
+    javaScript =  "window.scrollBy(0," + str(ele.rect['y'] - 5) + ");"
     driver.execute_script(javaScript)
     take_a_screenshot(driver)
     #pag.hotkey('command', 't', interval=0.25)
     for i in  range(0, 400):
-        pag.click(200, 470) #change based on window
+        pag.click(205, 460) #change based on window
         sleep(0.3) #change to debug
         pag.click(315, 245) #change based on window
         sleep(0.3)
@@ -63,14 +72,15 @@ def main():
 
 main()
 
-
-#var pointerX = -1;
-#var pointerY = -1;
-#document.onmousemove = function(event) {
-#	pointerX = event.pageX;
-#	pointerY = event.pageY;
-#}
-#setInterval(pointerCheck, 1000);
-#function pointerCheck() {
-#	console.log('Cursor at: '+pointerX+', '+pointerY);
-#}
+"""
+var pointerX = -1;
+var pointerY = -1;
+document.onmousemove = function(event) {
+	pointerX = event.pageX;
+	pointerY = event.pageY;
+}
+setInterval(pointerCheck, 1000);
+function pointerCheck() {
+	console.log('Cursor at: '+pointerX+', '+pointerY);
+}
+"""
