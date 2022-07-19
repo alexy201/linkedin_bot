@@ -27,25 +27,23 @@ def login_to_linkedin(driver):
 def send_requests_to_users(driver):
     path = "//h2[contains(., '%s')]" % sensative.SEARCH
     print(path)
-    while True:
-        try:
-            WebDriverWait(driver, 7).until(
-                EC.visibility_of_element_located((By.XPATH, path))
-            )
-        except:
-            driver.refresh()
-        else:
-            break
-    ele = driver.find_element(By.XPATH, path)
-    javaScript =  "window.scrollBy(0," + str(ele.rect['y'] - 5) + ");"
-    driver.execute_script(javaScript)
-    take_a_screenshot(driver)
-    #pag.hotkey('command', 't', interval=0.25)
-    for i in  range(0, 400):
-        pag.click(205, 460) #change based on window
-        sleep(0.3) #change to debug
-        pag.click(315, 245) #change based on window
-        sleep(0.3)
+    total = 0
+    while total < 400:
+        WebDriverWait(driver, 100).until(
+            EC.visibility_of_element_located((By.XPATH, path))
+        )
+        ele = driver.find_element(By.XPATH, path)
+        javaScript =  "window.scrollBy(0," + str(ele.rect['y'] - 5) + ");"
+        driver.execute_script(javaScript)
+        take_a_screenshot(driver)
+        #pag.hotkey('command', 't', interval=0.25)
+        for i in  range(0, 16):
+            pag.click(205, 460) #change based on window
+            sleep(0.3) #change to debug
+            pag.click(315, 245) #change based on window
+            sleep(0.3)
+        total += 6
+        driver.refresh()
     print("Done !")
     n =  int(input("FINISHED? "))
 
