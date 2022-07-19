@@ -27,14 +27,14 @@ def send_requests_to_users(driver):
     WebDriverWait(driver, 7).until(
         EC.presence_of_element_located((By.CLASS_NAME, "discover-cohort-view__heading"))
     )
-    javaScript =  "window.scrollBy(0,10610);"
+    javaScript =  "window.scrollBy(0,10610);" #change based on window
     driver.execute_script(javaScript)
     take_a_screenshot(driver)
     #pag.hotkey('command', 't', interval=0.25)
     for i in  range(0, 400):
-        pag.click(200, 500)
-        sleep(0.3)
-        pag.click(320, 275)
+        pag.click(200, 500) #change based on window
+        sleep(0.3) #change to debug
+        pag.click(320, 275) #change based on window
         sleep(0.3)
     print("Done !")
     n =  int(input("FINISHED? "))
