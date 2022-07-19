@@ -1,3 +1,4 @@
+from ssl import Options
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
@@ -10,31 +11,31 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
-
 from selenium.common.exceptions import NoSuchElementException
+import sensative
 
 def goto_network_page(driver, network_url):
     driver.get(network_url)
 
 def login_to_linkedin(driver):
     username = driver.find_element(By.ID,"session_key")
-    username.send_keys("alexsima2022@gmail.com")
+    username.send_keys(sensative.EMAIL)
     password = driver.find_element(By.ID,"session_password")
-    password.send_keys("Andrew@200203")
+    password.send_keys(sensative.PASSWORD)
     driver.find_element(By.CLASS_NAME,"sign-in-form__submit-button").click()
 
 def send_requests_to_users(driver):
     WebDriverWait(driver, 7).until(
         EC.presence_of_element_located((By.CLASS_NAME, "discover-cohort-view__heading"))
     )
-    javaScript =  "window.scrollBy(0,10610);" #change based on window
+    javaScript =  "window.scrollBy(0,13960);" #change based on window
     driver.execute_script(javaScript)
     take_a_screenshot(driver)
     #pag.hotkey('command', 't', interval=0.25)
     for i in  range(0, 400):
-        pag.click(200, 500) #change based on window
+        pag.click(200, 470) #change based on window
         sleep(0.3) #change to debug
-        pag.click(320, 275) #change based on window
+        pag.click(315, 245) #change based on window
         sleep(0.3)
     print("Done !")
     n =  int(input("FINISHED? "))
@@ -53,6 +54,8 @@ def start_bot(driver,url,network_url):
 def main():
     options = webdriver.ChromeOptions()
     options.add_argument("--auto-open-devtools-for-tabs")
+    options.add_argument("--incognito")
+    options.add_argument("--disable-site-isolation-trials") 
     url =  "http://linkedin.com/"
     network_url =  "http://linkedin.com/mynetwork/"
     driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
